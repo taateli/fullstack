@@ -7,14 +7,18 @@ class App extends React.Component {
       this.state = {
         hyva: 0,
         neutraali: 0,
-        huono: 0
+        huono: 0,
+        keskiarvo: 0,
+        lukumaara: 0
       }
     }
     
 
     klikHyva = () => {
         this.setState({
-          hyva: this.state.hyva + 1
+          hyva: this.state.hyva + 1,
+          keskiarvo: this.state.keskiarvo +1,
+          lukumaara: this.state.lukumaara +1  
           //kaikki: this.state.kaikki.concat('v')
         })
         renderoi()
@@ -24,7 +28,8 @@ class App extends React.Component {
 
     klikNeutraali = () => {
         this.setState({
-          neutraali: this.state.neutraali + 1
+          neutraali: this.state.neutraali + 1,
+          lukumaara: this.state.lukumaara +1
           //kaikki: this.state.kaikki.concat('v')
         })
         renderoi()
@@ -34,7 +39,9 @@ class App extends React.Component {
 
     klikHuono = () => {
         this.setState({
-          huono: this.state.huono + 1
+          huono: this.state.huono + 1,
+          keskiarvo: this.state.keskiarvo -1,
+          lukumaara: this.state.lukumaara +1
           //kaikki: this.state.kaikki.concat('v')
         })
         renderoi()
@@ -59,6 +66,8 @@ class App extends React.Component {
               <p>hyvä: {this.state.hyva}</p>
               <p>neutraali: {this.state.neutraali}</p>
               <p>huono: {this.state.huono}</p>
+              <p>keskiarvo: {this.state.keskiarvo / this.state.lukumaara}</p>
+              <p>positiivisia: {((this.state.hyva / this.state.lukumaara) * 100).toFixed(2)} %</p>
         </div>
         </div>
       )
