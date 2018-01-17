@@ -13,61 +13,51 @@ class App extends React.Component {
         }
     }
 
+    asetaArvoon = (nappi) =>
+        () => {
+            if (nappi == 'hyva') {
+                this.setState({
+                    hyva: this.state.hyva + 1,
+                    keskiarvo: this.state.keskiarvo + 1,
+                    lukumaara: this.state.lukumaara + 1
+                    //kaikki: this.state.kaikki.concat('v')
+                })
+            } else if (nappi == 'neutraali') {
+                this.setState({
+                    neutraali: this.state.neutraali + 1,
+                    lukumaara: this.state.lukumaara + 1
+                    //kaikki: this.state.kaikki.concat('v')
+                })
+            } else {
+                this.setState({
+                    huono: this.state.huono + 1,
+                    keskiarvo: this.state.keskiarvo - 1,
+                    lukumaara: this.state.lukumaara + 1
+                    //kaikki: this.state.kaikki.concat('v')
+                })
+            }
+            renderoi()
 
-    klikHyva = () => {
-        this.setState({
-            hyva: this.state.hyva + 1,
-            keskiarvo: this.state.keskiarvo + 1,
-            lukumaara: this.state.lukumaara + 1
-            //kaikki: this.state.kaikki.concat('v')
-        })
-        renderoi()
-        console.log("hyvä")
-    }
-
-
-    klikNeutraali = () => {
-        this.setState({
-            neutraali: this.state.neutraali + 1,
-            lukumaara: this.state.lukumaara + 1
-            //kaikki: this.state.kaikki.concat('v')
-        })
-        renderoi()
-        console.log("neut")
-    }
-
-
-    klikHuono = () => {
-        this.setState({
-            huono: this.state.huono + 1,
-            keskiarvo: this.state.keskiarvo - 1,
-            lukumaara: this.state.lukumaara + 1
-            //kaikki: this.state.kaikki.concat('v')
-        })
-        renderoi()
-        console.log("huono")
-    }
-
-
+        }
 
     render() {
         return (
             <div>
                 <h1>Anna palautetta</h1>
                 <Button
-                    handleClick={this.klikHyva}
+                    handleClick={this.asetaArvoon("hyva")}
                     text="hyvä"
                 />
                 <Button
-                    handleClick={this.klikNeutraali}
+                    handleClick={this.asetaArvoon("neutraali")}
                     text="neutraali"
                 />
                 <Button
-                    handleClick={this.klikHuono}
+                    handleClick={this.asetaArvoon("huono")}
                     text="huono"
                 />
                 <Statistics
-                    state={this.state} 
+                    state={this.state}
                 />
             </div>
         )
@@ -83,44 +73,44 @@ const Button = ({ handleClick, text }) => (
 
 const Statistics = (props) => {
     if (props.state.lukumaara === 0) {
-        return(
+        return (
             <div>
                 <h1>Statistiikka</h1>
                 <em>yhtään palautetta ei ole annettu</em>
             </div>
         )
     }
-    
+
     return (
         <div>
-        <h1>Statistiikka</h1>
-        <Statistic
-        text = "hyvä"
-        value = {props.state.hyva}
-        />
-        <Statistic
-        text = "neutraali"
-        value = {props.state.neutraali}
-        />
-        <Statistic
-        text = "huono"
-        value = {props.state.huono}
-        />
-        <Statistic
-        text = "keskiarvo"
-        value = {props.state.keskiarvo / props.state.lukumaara}
-        />
-        <Statistic
-        text = "positiivisia"
-        value = {((props.state.hyva / props.state.lukumaara) * 100).toFixed(2) + "%"}
-        />
-    </div>
+            <h1>Statistiikka</h1>
+            <Statistic
+                text="hyvä"
+                value={props.state.hyva}
+            />
+            <Statistic
+                text="neutraali"
+                value={props.state.neutraali}
+            />
+            <Statistic
+                text="huono"
+                value={props.state.huono}
+            />
+            <Statistic
+                text="keskiarvo"
+                value={props.state.keskiarvo / props.state.lukumaara}
+            />
+            <Statistic
+                text="positiivisia"
+                value={((props.state.hyva / props.state.lukumaara) * 100).toFixed(2) + "%"}
+            />
+        </div>
 
     )
 }
 
-const Statistic = ({text, value}) => {
-    return(
+const Statistic = ({ text, value }) => {
+    return (
         <p>{text}: {value}</p>
     )
 }
