@@ -84,26 +84,30 @@ const Statistics = (props) => {
     return (
         <div>
             <h1>Statistiikka</h1>
-            <Statistic
-                text="hyvä"
-                value={props.state.hyva}
-            />
-            <Statistic
-                text="neutraali"
-                value={props.state.neutraali}
-            />
-            <Statistic
-                text="huono"
-                value={props.state.huono}
-            />
-            <Statistic
-                text="keskiarvo"
-                value={props.state.keskiarvo / props.state.lukumaara}
-            />
-            <Statistic
-                text="positiivisia"
-                value={((props.state.hyva / props.state.lukumaara) * 100).toFixed(2) + "%"}
-            />
+            <table>
+                <tbody>
+                    <Statistic
+                        text="hyvä"
+                        value={props.state.hyva}
+                    />
+                    <Statistic
+                        text="neutraali"
+                        value={props.state.neutraali}
+                    />
+                    <Statistic
+                        text="huono"
+                        value={props.state.huono}
+                    />
+                    <Statistic
+                        text="keskiarvo"
+                        value={props.state.keskiarvo / props.state.lukumaara}
+                    />
+                    <Statistic
+                        text="positiivisia"
+                        value={((props.state.hyva / props.state.lukumaara) * 100).toFixed(2) + "%"}
+                    />
+                </tbody>
+            </table>
         </div>
 
     )
@@ -111,7 +115,12 @@ const Statistics = (props) => {
 
 const Statistic = ({ text, value }) => {
     return (
-        <p>{text}: {value}</p>
+        <tr>
+            <th>{text}</th>
+            <td>{value}</td>
+        </tr>
+
+
     )
 }
 
