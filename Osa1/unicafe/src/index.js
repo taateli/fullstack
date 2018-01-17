@@ -1,0 +1,135 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class App extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            hyva: 0,
+            neutraali: 0,
+            huono: 0,
+            keskiarvo: 0,
+            lukumaara: 0
+        }
+    }
+
+    asetaArvoon = (nappi) =>
+        () => {
+            if (nappi == 'hyva') {
+                this.setState({
+                    hyva: this.state.hyva + 1,
+                    keskiarvo: this.state.keskiarvo + 1,
+                    lukumaara: this.state.lukumaara + 1
+                   
+                })
+            } else if (nappi == 'neutraali') {
+                this.setState({
+                    neutraali: this.state.neutraali + 1,
+                    lukumaara: this.state.lukumaara + 1
+                   
+                })
+            } else {
+                this.setState({
+                    huono: this.state.huono + 1,
+                    keskiarvo: this.state.keskiarvo - 1,
+                    lukumaara: this.state.lukumaara + 1
+                    
+                })
+            }
+            renderoi()
+
+        }
+
+    render() {
+        return (
+            <div>
+                <h1>Anna palautetta</h1>
+                <Button
+                    handleClick={this.asetaArvoon("hyva")}
+                    text="hyvä"
+                />
+                <Button
+                    handleClick={this.asetaArvoon("neutraali")}
+                    text="neutraali"
+                />
+                <Button
+                    handleClick={this.asetaArvoon("huono")}
+                    text="huono"
+                />
+                <Statistics
+                    state={this.state}
+                />
+            </div>
+        )
+    }
+
+}
+
+const Button = ({ handleClick, text }) => (
+    <button onClick={handleClick}>
+        {text}
+    </button>
+)
+
+const Statistics = (props) => {
+    if (props.state.lukumaara === 0) {
+        return (
+            <div>
+                <h1>Statistiikka</h1>
+                <em>yhtään palautetta ei ole annettu</em>
+            </div>
+        )
+    }
+
+    return (
+        <div>
+            <h1>Statistiikka</h1>
+            <table>
+                <tbody>
+                    <Statistic
+                        text="hyvä"
+                        value={props.state.hyva}
+                    />
+                    <Statistic
+                        text="neutraali"
+                        value={props.state.neutraali}
+                    />
+                    <Statistic
+                        text="huono"
+                        value={props.state.huono}
+                    />
+                    <Statistic
+                        text="keskiarvo"
+                        value={props.state.keskiarvo / props.state.lukumaara}
+                    />
+                    <Statistic
+                        text="positiivisia"
+                        value={((props.state.hyva / props.state.lukumaara) * 100).toFixed(2) + "%"}
+                    />
+                </tbody>
+            </table>
+        </div>
+
+    )
+}
+
+const Statistic = ({ text, value }) => {
+    return (
+        <tr>
+            <th>{text}</th>
+            <td>{value}</td>
+        </tr>
+
+
+    )
+}
+
+
+const renderoi = () => {
+    ReactDOM.render(
+        <App />,
+        document.getElementById('root')
+    )
+}
+
+renderoi()
