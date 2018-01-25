@@ -19,15 +19,14 @@ class App extends React.Component {
         axios
             .get('https://restcountries.eu/rest/v2/all')
             .then(response => {
-                console.log('promise fulfilled')
                 this.setState({ countries: response.data })
             })
     }
 
 
 
-    handleCountryClick = (country) => {
-       
+    handleCountryClick = (name) => () => {
+       this.setState({ filter: name.toLowerCase() })
     }
 
     handleFilterChange = (event) => {

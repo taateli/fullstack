@@ -22,7 +22,7 @@ const Countries = ({countriesToShow, handleCountryClick}) => {
     
     return(
         <div>
-            {countriesToShow.map(country => <div key={country.name} onClick={handleCountryClick({country})}> {country.name} </div>)}
+            {countriesToShow.map(country => <div key={country.name} onClick={handleCountryClick(country.name)}> {country.name} </div>)}
         </div>
         
     )
